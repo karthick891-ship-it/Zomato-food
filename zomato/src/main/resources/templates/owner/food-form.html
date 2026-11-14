@@ -1,0 +1,9 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Food item</title><link rel="stylesheet" th:href="@{/css/style.css}"></head><body><header th:replace="~{fragments :: nav}"></header>
+<main class="container narrow"><h1 th:text="${food.id==null}?'Add food item':'Edit food item'">Food</h1>
+<form class="checkout" method="post" th:action="@{/owner/food}"><input type="hidden" name="id" th:value="${food.id}">
+<label>Name<input name="name" th:value="${food.name}" required></label><label>Description<textarea name="description" rows="3" th:text="${food.description}"></textarea></label>
+<label>Price (₹)<input name="price" type="number" step="0.01" min="1" th:value="${food.price}" required></label>
+<label>Category<input name="category" list="cats" th:value="${food.category}" required><datalist id="cats"><option>Biryani</option><option>Pizza</option><option>Burgers</option><option>Starters</option><option>Desserts</option><option>Beverages</option></datalist></label>
+<label>Image URL<input name="imageUrl" th:value="${food.imageUrl}" placeholder="https://... (or /images/yourfile.jpg)"></label>
+<label class="radio"><input type="checkbox" name="veg" value="true" th:checked="${food.veg}"> Vegetarian</label><label class="radio"><input type="checkbox" name="available" value="true" th:checked="${food.available}"> Available</label>
+<button class="button full">Save</button></form></main></body></html>

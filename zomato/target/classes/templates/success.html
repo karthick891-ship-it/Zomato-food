@@ -1,0 +1,4 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Order placed</title><link rel="stylesheet" th:href="@{/css/style.css}"></head><body><header th:replace="~{fragments :: nav}"></header>
+<main class="container narrow success"><div class="check">✓</div><p class="eyebrow">THANK YOU</p><h1>Order placed!</h1><p>Your order has been received successfully.</p>
+<div class="order-box"><p>Order number <strong th:text="${'#'+order.id}">#1</strong></p><p>Status <strong th:text="${order.status}">PLACED</strong></p><p>Payment <strong th:text="${order.paymentMethod+' · '+order.paymentStatus}">COD</strong></p><p>Total <strong th:text="${'₹'+#numbers.formatDecimal(order.totalAmount,1,2)}">₹0</strong></p></div>
+<a th:href="@{/orders/{id}(id=${order.id})}" class="button">Track order</a></main></body></html>

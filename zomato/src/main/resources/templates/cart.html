@@ -1,0 +1,11 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Your cart</title><link rel="stylesheet" th:href="@{/css/style.css}"></head><body><header th:replace="~{fragments :: nav}"></header>
+<main class="container narrow"><p class="eyebrow">YOUR ORDER</p><h1>Your cart</h1>
+<div th:if="${!#lists.isEmpty(rows)}"><div class="cart-row" th:each="row : ${rows}"><div><h3 th:text="${row.food.name}">Food</h3><p th:text="${'₹'+row.food.price+' each'}">₹100</p></div>
+<form th:action="@{/cart/dec/{id}(id=${row.food.id})}" method="post"><button class="qty">−</button></form><b th:text="${row.quantity}">1</b><form th:action="@{/cart/inc/{id}(id=${row.food.id})}" method="post"><button class="qty">+</button></form>
+<strong th:text="${'₹'+#numbers.formatDecimal(row.subtotal,1,2)}">₹100</strong><form th:action="@{/cart/remove/{id}(id=${row.food.id})}" method="post"><button class="remove">Remove</button></form></div>
+<form class="coupon" th:action="@{/cart/coupon}" method="post"><input name="code" placeholder="Coupon code (try WELCOME20)" th:value="${session.coupon}"><button class="button">Apply</button></form>
+<p class="flash" th:if="${t.couponMessage}" th:text="${t.couponMessage}"></p>
+<div class="bill"><p><span>Subtotal</span><span th:text="${'₹'+#numbers.formatDecimal(t.subtotal,1,2)}"></span></p><p><span>GST (5%)</span><span th:text="${'₹'+#numbers.formatDecimal(t.tax,1,2)}"></span></p>
+<p><span>Delivery (free above ₹500)</span><span th:text="${'₹'+#numbers.formatDecimal(t.deliveryFee,1,2)}"></span></p><p th:if="${t.discount.signum()>0}"><span>Discount</span><span th:text="${'−₹'+#numbers.formatDecimal(t.discount,1,2)}"></span></p></div>
+<div class="total"><span>Total</span><strong th:text="${'₹'+#numbers.formatDecimal(t.total,1,2)}">₹0</strong></div><a href="/checkout" class="button full">Proceed to checkout</a></div>
+<div class="empty" th:if="${#lists.isEmpty(rows)}"><p>Your cart is empty.</p><a href="/" class="button">Explore restaurants</a></div></main></body></html>

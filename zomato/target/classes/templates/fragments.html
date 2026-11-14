@@ -1,0 +1,11 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"><body>
+<header th:fragment="nav" class="top"><a class="brand" href="/">zomato<span>.</span></a>
+<nav><a href="/">Home</a>
+<a href="/cart">Cart<b class="badge" th:if="${session.cart != null and !session.cart.isEmpty()}" th:text="${session.cart.size()}">1</b></a>
+<a sec:authorize="isAuthenticated()" href="/orders">Orders</a>
+<a sec:authorize="isAuthenticated()" href="/favorites">Favorites</a>
+<a sec:authorize="hasRole('RESTAURANT')" href="/owner">Dashboard</a>
+<a sec:authorize="hasRole('ADMIN')" href="/admin">Admin</a>
+<a sec:authorize="!isAuthenticated()" href="/login">Login</a>
+<form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post" class="inline"><button class="remove" type="submit">Logout</button></form>
+</nav></header></body></html>

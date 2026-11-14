@@ -1,0 +1,14 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Restaurant menu</title><link rel="stylesheet" th:href="@{/css/style.css}"></head><body><header th:replace="~{fragments :: nav}"></header>
+<main class="container"><a href="/" class="text-link">← Back to restaurants</a><p class="flash" th:if="${msg}" th:text="${msg}"></p>
+<section class="restaurant-head"><p class="eyebrow">RESTAURANT</p><h1 th:text="${restaurant.name}">Restaurant</h1><p th:text="${restaurant.cuisine+' · '+restaurant.location}">Cuisine</p>
+<span class="rating" th:text="${'★ '+restaurant.rating}">★ 4.5</span>
+<form sec:authorize="isAuthenticated()" th:action="@{/favorite/{id}(id=${restaurant.id})}" method="post" class="inline"><button class="remove" th:text="${isFav}?'♥ Saved':'♡ Save'">♡ Save</button></form></section>
+<form class="filters" method="get"><input name="q" th:value="${q}" placeholder="Search dishes"><label><input type="checkbox" name="veg" value="true" th:checked="${veg}"> Veg only</label><button class="button">Filter</button></form>
+<div class="section-head"><h2>Menu</h2><a href="/cart" class="text-link">Go to cart →</a></div>
+<div class="food-list"><article class="food-row" th:each="f : ${foods}"><div><span class="dot" th:classappend="${f.veg}?'veg':'nonveg'"></span><h3 th:text="${f.name}">Food</h3><p th:text="${f.description}">Description</p><strong th:text="${'₹'+#numbers.formatDecimal(f.price,1,2)}">₹199</strong></div>
+<img th:src="${f.imageUrl}" alt="Food" onerror="this.onerror=null;this.src='/images/placeholder.svg'"><form th:action="@{/cart/add/{id}(id=${f.id})}" method="post"><button class="button">Add +</button></form></article></div>
+<p class="empty" th:if="${#lists.isEmpty(foods)}">No menu items match.</p>
+<section class="reviews"><h2>Ratings &amp; reviews</h2>
+<form sec:authorize="isAuthenticated()" class="checkout" th:action="@{/restaurant/{id}/review(id=${restaurant.id})}" method="post"><label>Rating<select name="rating"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></label><label>Comment<textarea name="comment" rows="2" maxlength="500"></textarea></label><button class="button">Submit review</button></form>
+<p sec:authorize="!isAuthenticated()" class="muted"><a class="text-link" href="/login">Login</a> to write a review.</p>
+<div class="review" th:each="rv : ${reviews}"><strong th:text="${rv.user.name+' · ★ '+rv.rating}">User</strong><p th:text="${rv.comment}"></p></div></section></main></body></html>

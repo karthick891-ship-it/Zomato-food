@@ -1,0 +1,8 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Checkout</title><link rel="stylesheet" th:href="@{/css/style.css}"></head><body><header th:replace="~{fragments :: nav}"></header>
+<main class="container narrow"><p class="eyebrow">ALMOST THERE</p><h1>Delivery details</h1><p class="flash" th:if="${msg}" th:text="${msg}"></p>
+<form class="checkout" method="post" th:action="@{/checkout}"><label>Your name<input name="customerName" required maxlength="100" th:value="${me.name}"></label>
+<label>Phone number<input name="phone" required pattern="[0-9]{10}" th:value="${me.phone}" placeholder="10-digit mobile number"></label>
+<label>Delivery address<textarea name="deliveryAddress" required rows="4" placeholder="House no, street, area, city"></textarea></label>
+<label class="radio"><input type="radio" name="paymentMethod" value="COD" checked> Cash on Delivery</label>
+<label class="radio"><input type="radio" name="paymentMethod" value="ONLINE"> Pay online (demo gateway, no real charge)</label>
+<div class="total"><span>Payable</span><strong th:text="${'₹'+#numbers.formatDecimal(t.total,1,2)}">₹0</strong></div><button class="button full">Place order</button></form></main></body></html>
