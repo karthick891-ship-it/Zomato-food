@@ -7,14 +7,6 @@ Extends the basic version with login, roles, order persistence, coupons, restaur
 3. `mvn spring-boot:run` then open http://localhost:8080
 The database `zomato_basic` and all tables are created automatically; sample restaurants, foods (with images), coupons and users are seeded on first start.
 
-## Demo accounts
-| Role | Email | Password |
-|---|---|---|
-| Customer | demo@zomato.com | Demo@123 |
-| Restaurant owner | owner@zomato.com | Owner@123 |
-| Admin | admin@zomato.com | Admin@123 |
-Coupons: WELCOME20 (20%, max 100, min 199), FEAST10.
-
 ## Features
 Customer: register/login, search by name/cuisine/location, category chips, veg/dish filter, cart with +/-, coupons, GST + delivery fee, COD or demo online payment, order history, cancel (while PLACED), live status tracking (auto-refresh), reviews, favourites.
 Owner: dashboard, sales totals, accept/reject/prepare/dispatch/deliver orders, add/edit/delete food, set price/availability. Register as "Restaurant owner" to get your own restaurant.
